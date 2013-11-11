@@ -6,7 +6,7 @@ version:                0.1.0.0
 synopsis:               Machine Learning Library
 -- description:
 homepage:               http://github.com/yogsototh/Hml
-license:                PublicDomain
+license:                MIT
 license-file:           LICENSE
 author:                 Yann Esposito
 maintainer:             Yann.Esposito@gmail.com
