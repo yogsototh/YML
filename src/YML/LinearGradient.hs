@@ -1,4 +1,12 @@
-module YML.LinearGradient where
+module YML.LinearGradient
+(
+  Parameters (..)
+, LinearFunction
+, nullF
+, cost
+, gradientDescent
+)
+where
 
 import              Data.List              (intercalate)
 import              Data.Vector.Unboxed    ((!))

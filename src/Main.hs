@@ -3,8 +3,9 @@ import              System.Console.GetOpt
 import              System.Environment     (getArgs,getProgName)
 import              System.IO              (readFile)
 
-import              YML.Dataset
-import              YML.LinearGradient
+import              YML.Dataset             (parse, R)
+import              YML.LinearGradient      (cost, gradientDescent, nullF
+                                            , Parameters (..) )
 
 -- | Our main function takes a file as parameter
 -- and try to read it and put its values inside a dataset data structure

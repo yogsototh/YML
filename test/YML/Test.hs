@@ -1,4 +1,4 @@
-module Hml.Test where
+module YML.Test where
 
 import Test.Framework (testGroup, Test)
 import Test.Framework.Providers.HUnit
@@ -6,11 +6,11 @@ import Test.HUnit hiding (Test)
 
 import Test.Framework.Providers.QuickCheck2 (testProperty)
 
-import Yml.Dataset
-import Yml.LinearGradient
+import YML.Dataset
+import YML.LinearGradient
 
 hmlSuite :: Test
-hmlSuite = testGroup "Hml testing"
+hmlSuite = testGroup "YML testing"
     [ testCase "Linear Cost Function" (testCost linearDataset 100)
     , testProperty "Cost Function QuickCheck" prop_cost]
 

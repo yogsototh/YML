@@ -1,4 +1,11 @@
 module YML.Dataset
+(
+   R
+ , Value (..)
+ , Dataset (..)
+ , nbFeatures
+ , parse
+)
 where
 
 import              Data.List              (intercalate)
