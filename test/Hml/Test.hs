@@ -6,7 +6,8 @@ import Test.HUnit hiding (Test)
 
 import Test.Framework.Providers.QuickCheck2 (testProperty)
 
-import Hml
+import Yml.Dataset
+import Yml.LinearGradient
 
 hmlSuite :: Test
 hmlSuite = testGroup "Hml testing"

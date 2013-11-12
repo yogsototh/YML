@@ -10,11 +10,13 @@ import              YML.LinearGradient
 -- and try to read it and put its values inside a dataset data structure
 main :: IO ()
 main = do
-    (options,file) <- parseArgs
-    fileContent <- readFile file
+    (options,file)  <- parseArgs
+    fileContent     <- readFile file
     let trainingSet = parse fileContent
-    print trainingSet
+    -- print trainingSet
+    putStr "Cost of training set using the null function: "
     print $ cost trainingSet (nullF trainingSet)
+    putStr "Function minimizing the cost: "
     print $ gradientDescent (optionsToParameters options) trainingSet
     where
         optionsToParameters :: Options -> Parameters

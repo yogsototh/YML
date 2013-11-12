@@ -3,16 +3,19 @@ module YML.LinearGradient where
 import              Data.List              (intercalate)
 import              Data.Vector.Unboxed    ((!))
 import qualified    Data.Vector.Unboxed as V
-import              Debug.Trace            (trace)
-
 import              YML.Dataset
+
+-- swap comments to show debug traces
+-- import              Debug.Trace            (trace)
+trace _ x = x
+
 
 data Parameters  = Parameters { alpha :: R , threshold :: R} deriving Show
 
 -- | Linear Function type
 data LinearFunction = LinearFunction {thetas :: V.Vector R}
 instance Show LinearFunction where
-    show l = intercalate ", " $ map show $ V.toList (thetas l)
+    show l = intercalate ", " $ map (take 5 . show) $ V.toList (thetas l)
 
 -- | The null function (use the dataset to determine the number of features)
 nullF :: Dataset -> LinearFunction
