@@ -16,12 +16,13 @@ type R = Double -- Just in case I want to change the precision later
 
 -- | Value
 data Value = Value {xs :: V.Vector R, y :: R} -- by convention xs ! 0 = 1
+    deriving (Eq)
 instance Show Value where
     show (Value features value) = intercalate "," $
         map show (V.toList features) ++ [show value]
 
 -- | Dataset
-data Dataset = Dataset [Value]
+data Dataset = Dataset [Value] deriving (Eq)
 instance Show Dataset where
     show (Dataset values) = "[" ++ intercalate "\n" (map show values) ++ "]"
 
@@ -30,7 +31,10 @@ nbFeatures :: Dataset -> Int
 nbFeatures (Dataset (v:_)) = V.length (xs v)
 nbFeatures _ = error "Empty dataset"
 
--- | Parse some file into a Dataset
+-- | Parse some string into a Dataset
+-- Example:
+--
+-- > parse "10 20\n30 40"
 parse :: String -> Dataset
 parse fileContent = fillValues $ map words (lines fileContent)
     where

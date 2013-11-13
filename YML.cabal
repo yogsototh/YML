@@ -27,6 +27,8 @@ executable yml
 
 library
   exposed-modules:      YML
+                        , YML.Dataset
+                        , YML.LinearGradient
   -- other-modules:
   -- other-extensions:
   build-depends:        base >=4.6 && <4.7
@@ -36,9 +38,12 @@ library
 
 test-suite Tests
   hs-source-dirs:       test
-  main-is:              test.hs
+  main-is:              Test.hs
   Type:                 exitcode-stdio-1.0
+  default-language:     Haskell2010
   build-depends:        base ==4.6.*, Cabal >= 1.16.0
+                        , vector
+                        , YML
                         , QuickCheck
                         , HUnit
                         , test-framework
