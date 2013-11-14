@@ -1,8 +1,11 @@
 module Main where
 
-import Test.Framework (defaultMain)
+import Test.Tasty (defaultMain,testGroup)
 import YML.Dataset.Test
 import YML.LinearGradient.Test
 
 main :: IO ()
-main = defaultMain [datasetSuite,linearGradientSuite]
+main = defaultMain $ testGroup "Tests"
+            [ datasetSuite
+            , linearGradientSuite
+            ]

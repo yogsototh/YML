@@ -29,7 +29,7 @@ instance Show Dataset where
 -- | returns the number of features of a dataset
 nbFeatures :: Dataset -> Int
 nbFeatures (Dataset (v:_)) = V.length (xs v)
-nbFeatures _ = error "Empty dataset"
+nbFeatures _ = 0
 
 -- | Parse some string into a Dataset
 -- Example:

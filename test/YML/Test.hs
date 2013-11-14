@@ -1,10 +1,9 @@
 module YML.Test where
 
-import Test.Framework (testGroup, Test)
-import Test.Framework.Providers.HUnit
-import Test.HUnit hiding (Test)
-
-import Test.Framework.Providers.QuickCheck2 (testProperty)
+import Test.Tasty (testGroup, Test)
+import Test.Tasty.SmallCheck as SC
+import Test.Tasty.QuickCheck as QC
+import Test.Tasty.HUnit
 
 import YML.Dataset
 import YML.LinearGradient
@@ -12,12 +11,12 @@ import YML.LinearGradient
 ymlSuite :: Test
 ymlSuite = testGroup "YML testing"
     [ testCase "Linear Cost Function" (testCost linearDataset 100)
-    , testProperty "Cost Function QuickCheck" prop_cost]
+    , SC.testProperty "Cost Function is positive" prop_cost_is_positive]
 
 linearDataset = [10,20,30,40]
 
 testCost :: Dataset -> Integer -> Assertion
 testCost ds expectedValue = expectedValue @=? cost ds
 
-prop_cost :: [Integer] -> Bool
-prop_cost list = sum list == cost list
+prop_cost_is_positive :: Dataset -> Bool
+prop_cost_is_positive = forAll $ \dataset -> cost dataset (nullF dataset) > 0
