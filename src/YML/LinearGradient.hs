@@ -15,7 +15,9 @@ import              YML.Dataset
 
 -- swap comments to show debug traces
 -- import              Debug.Trace            (trace)
+trace :: a -> b -> b
 trace _ x = x
+--
 
 
 data Parameters  = Parameters { alpha :: R , threshold :: R} deriving Show
@@ -38,7 +40,7 @@ h f v = V.foldl (\acc (x,t) -> acc + x*t) 0 (V.zip (xs v) (thetas f))
 -- | The function giving the cost of some linear function relatively
 -- to some dataset.
 cost :: Dataset -> LinearFunction -> Double
-cost (Dataset values) f = (sum (map ((^2).dist) values))/(2*m)
+cost (Dataset values) f = (sum (map ((**2).dist) values))/(2*m)
     where
      m = fromIntegral $ length values
      dist v = h f v - (y v)
@@ -59,25 +61,16 @@ oneStepGradient opts dataset f = if bad f then
                             else
                                 trace ((show f) ++ ": " ++ show (cost dataset f)) $ LinearFunction newthetas
     where
-        bad f = V.any (\x -> isNaN x || isInfinite x) (thetas f)
+        bad phi = V.any (\x -> isNaN x || isInfinite x) (thetas phi)
         -- new_theta_j = theta_j - alpha * derive cost (theta0, theta1)
         newthetas = V.imap newcost (thetas f)
         newcost i x = x - (alpha opts) * cost' i dataset f
 
-coupleFilter :: [a] -> (a -> a -> Bool) -> [a]
-coupleFilter      []  _ = []
-coupleFilter   (x:[]) _ = []
-coupleFilter (x:y:xs) f = if f x y
-                            then
-                                x:coupleFilter (y:xs) f
-                            else
-                                coupleFilter (y:xs) f
-
 gradientDescent :: Parameters -> Dataset -> LinearFunction
-gradientDescent opts t = head $ coupleFilter gradients close
+gradientDescent opts t = snd $ head $ filter close $ zip gradients (tail gradients)
     where
-        close :: LinearFunction -> LinearFunction -> Bool
-        close (LinearFunction xs) (LinearFunction ys) = dist < threshold opts
+        close :: (LinearFunction,LinearFunction) -> Bool
+        close ((LinearFunction us),(LinearFunction vs)) = dist < threshold opts
             where
-                dist = V.foldl (\acc (x,y) -> acc + (x-y)^2 ) 0 (V.zip xs ys)
+                dist = V.foldl (\acc (u,v) -> acc + (u-v)**2 ) 0 (V.zip us vs)
         gradients = iterate (oneStepGradient opts t) (nullF t)

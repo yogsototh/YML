@@ -9,7 +9,6 @@ module YML.Dataset
 where
 
 import              Data.List              (intercalate)
-import              Data.Vector.Unboxed    ((!))
 import qualified    Data.Vector.Unboxed as V
 
 type R = Double -- Just in case I want to change the precision later
